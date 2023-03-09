@@ -1,0 +1,150 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "MAXMIND.#####",
+ "creation": "2023-02-16 03:01:30.821026",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "begin_ip_num",
+  "isp",
+  "asnum",
+  "org",
+  "startip",
+  "end_ip",
+  "dateupdated",
+  "abuseemails",
+  "as_owner_virustotal",
+  "country",
+  "continent",
+  "regional_internet_registry",
+  "malicious_count",
+  "suspicious_count",
+  "reputation",
+  "virustotalemails",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "begin_ip_num",
+   "fieldtype": "Data",
+   "label": "begin_ip_num"
+  },
+  {
+   "fieldname": "isp",
+   "fieldtype": "Data",
+   "label": "ISP"
+  },
+  {
+   "fieldname": "asnum",
+   "fieldtype": "Data",
+   "label": "ASNUM"
+  },
+  {
+   "fieldname": "org",
+   "fieldtype": "Data",
+   "label": "Org"
+  },
+  {
+   "fieldname": "startip",
+   "fieldtype": "Data",
+   "label": "StartIP"
+  },
+  {
+   "fieldname": "end_ip",
+   "fieldtype": "Data",
+   "label": "EndIP"
+  },
+  {
+   "fieldname": "dateupdated",
+   "fieldtype": "Data",
+   "label": "DateUpdated"
+  },
+  {
+   "fieldname": "abuseemails",
+   "fieldtype": "Data",
+   "label": "AbuseEmails"
+  },
+  {
+   "fieldname": "as_owner_virustotal",
+   "fieldtype": "Data",
+   "label": "AS_owner_Virustotal"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "Country"
+  },
+  {
+   "fieldname": "continent",
+   "fieldtype": "Data",
+   "label": "Continent"
+  },
+  {
+   "fieldname": "regional_internet_registry",
+   "fieldtype": "Data",
+   "label": "Regional_internet_registry"
+  },
+  {
+   "fieldname": "malicious_count",
+   "fieldtype": "Data",
+   "label": "Malicious_count"
+  },
+  {
+   "fieldname": "suspicious_count",
+   "fieldtype": "Data",
+   "label": "Suspicious_count"
+  },
+  {
+   "fieldname": "reputation",
+   "fieldtype": "Data",
+   "label": "Reputation"
+  },
+  {
+   "fieldname": "virustotalemails",
+   "fieldtype": "Data",
+   "label": "VirusTotalEmails"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Max Mind",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-02-18 01:56:57.063735",
+ "modified_by": "Administrator",
+ "module": "File Processor",
+ "name": "Max Mind",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}

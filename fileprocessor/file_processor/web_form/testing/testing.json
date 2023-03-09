@@ -1,0 +1,60 @@
+{
+ "accept_payment": 0,
+ "allow_comments": 0,
+ "allow_delete": 1,
+ "allow_edit": 0,
+ "allow_incomplete": 0,
+ "allow_multiple": 1,
+ "allow_print": 0,
+ "amount": 0.0,
+ "amount_based_on_field": 0,
+ "apply_document_permissions": 1,
+ "button_label": "Save",
+ "creation": "2023-02-21 05:08:11.954978",
+ "currency": "PHP",
+ "doc_type": "Test",
+ "docstatus": 0,
+ "doctype": "Web Form",
+ "idx": 0,
+ "is_standard": 1,
+ "list_columns": [
+  {
+   "fieldname": "file",
+   "fieldtype": "Attach",
+   "label": "File"
+  }
+ ],
+ "list_title": "Test 01",
+ "login_required": 1,
+ "max_attachment_size": 0,
+ "modified": "2023-03-07 08:23:50.364923",
+ "modified_by": "Administrator",
+ "module": "File Processor",
+ "name": "testing",
+ "owner": "Administrator",
+ "payment_button_label": "Buy Now",
+ "published": 1,
+ "route": "testing",
+ "show_attachments": 0,
+ "show_list": 1,
+ "show_sidebar": 1,
+ "success_message": "A message has been sent! Please refer to the Issues tab for more information.",
+ "success_title": "File Processed!",
+ "success_url": "",
+ "title": "Testing",
+ "web_form_fields": [
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "file",
+   "fieldtype": "Attach",
+   "hidden": 0,
+   "label": "File",
+   "max_length": 0,
+   "max_value": 0,
+   "read_only": 0,
+   "reqd": 0,
+   "show_in_filter": 0
+  }
+ ],
+ "website_sidebar": "Test Side Bar"
+}
