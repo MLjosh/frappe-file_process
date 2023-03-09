@@ -222,15 +222,39 @@ class FileProcess(Document):
 		    issue_name = f"ISS-{dt_string}-{result_rand_num}"
 		    current_user_email = frappe.get_doc("User", frappe.session.user).email
 
+		    content_no_ip = f"""
+		    Dear Valued Customer,<br>
+		    We regret to inform you that this {key} IP address you have provided us is not currently listed in our database. We sincerely apologize for any inconvenience this may have caused. Rest assured, we have taken immediate action and added this IP address to our records to ensure that future email logs are sent to the designated abuse email addresses.
+		    Thank you for bringing this to our attention and we appreciate your patience and understanding.This is the email logs that did not send.<br><br>
+		    {table}
+
+		    """
+
 		    try:
-		    	frappe.sendmail(
-		    		sender="samplebns088@gmail.com",
-		    		recipients=f"{email}",
-		    	    subject=f"Abuse Alerts: {company}: {key}",
-		    	    message=content
-		    	    )
-		    	# frappe.msgprint("Message Sent!")
-		    	try:
+		    	if email is None:
+		    		new_issue = frappe.get_doc({
+		    		    "doctype": "Issue",
+		    		    "subject": f"Notice : IP address {key} is not listed in our records",
+		    		    "description": content_no_ip,
+		    		    "raised_by"  : current_user_email,
+		    		    "assigned_to": "samplebns088@gmail.com",
+		    		    # "recipients" : f"{email}",
+		    		    # "date": dt_str,
+		    		    # "issue_id" : issue_name,
+		    		    "status": "Open"
+		    		})
+		    		new_issue.insert(ignore_permissions=True)
+
+
+		    	if email is not None:
+			    	frappe.sendmail(
+			    		sender="samplebns088@gmail.com",
+			    		recipients=f"{email}",
+			    	    subject=f"Abuse Alerts: {company}: {key}",
+			    	    message=content
+			    	    )
+			    	frappe.msgprint("sent!")
+
 		    		new_issue = frappe.get_doc({
 		    		    "doctype": "Issue",
 		    		    "subject": f"Abuse Alerts: {company}: {key}",
@@ -243,8 +267,7 @@ class FileProcess(Document):
 		    		    "status": "Open"
 		    		})
 		    		new_issue.insert(ignore_permissions=True)
-		    	except Exception as e:
-		    		frappe.throw(msg="Add Issue Error!")
+
 
 		    	try:
 		    		self.issue_id = issue_name
@@ -253,9 +276,9 @@ class FileProcess(Document):
 		    		# frappe.msgprint("Success: File Added!")
 		    	
 		    	except Exception as e:
-		    		frappe.throw("Failed: File Error!")
+		    		frappe.msgprint("Failed: File Error!")
 		    except Exception as e:
-		    	frappe.throw("Message not sent!")
+		    	frappe.msgprint("Message not sent!")
 
 		  
 
