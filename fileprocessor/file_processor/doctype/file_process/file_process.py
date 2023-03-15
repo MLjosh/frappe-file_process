@@ -29,30 +29,46 @@ import datetime
 import random
 from datetime import datetime
 
+from frappe import *
+from frappe import _
+# import frappe.ui
+
 
 
 class FileProcess(Document):
+
+
+
 
 	def before_save(self):
 		
 		subscribed_customers = frappe.get_all("Customer", filters={"subscriber": 1})
 		user = frappe.get_doc("User", frappe.session.user)
-		# user_email = frappe.db.get_value("User", frappe.session.user, "email")
-
 		logged_in_user_name = user.full_name
+
+
+
+		# Check if the logged-in user is a subscriber
+		is_subscriber = False
 		for customer in subscribed_customers:
-			customer_name = customer['name']
-			if logged_in_user_name == customer_name:
-				# frappe.msgprint("Subscriber")
-				break
+		    if logged_in_user_name == customer['name']:
+		        is_subscriber = True
+		        break
 
+		if not is_subscriber:
+		    frappe.throw(
+		        title='Error!',
+		        msg='You must be a subscriber to process files!',
+		    )
 
-		else:
-			frappe.throw("You must be a subscriber to process files!")
 
 		if self.file:
 		    if not self.file.lower().endswith('.csv'):
-		        frappe.throw("Please attach CSV File only!")
+		        # frappe.throw("Error!","Please attach Converted CSV File only!")
+		        frappe.throw(
+		            title='Error!',
+		            msg='Please attach Converted CSV File only!',
+		        )
 
 
 		ip_ranges = []
@@ -111,7 +127,7 @@ class FileProcess(Document):
 				    #         frappe.throw(f"The 'src_ip' column is empty for the row with data {row}")
 				
 			except Exception as e:
-				frappe.throw("Error in Processing your file. Please make sure you have uploaded the correct file.")
+				frappe.throw("Error in Processing your file. Please make sure you have uploaded the the converted file.")
 	
 
 
@@ -254,8 +270,8 @@ class FileProcess(Document):
 		    		    "description": content_no_ip,
 		    		    "raised_by"  : current_user_email,
 		    		    "assigned_to": "samplebns088@gmail.com",
-		    		    # "recipients" : f"{email}",
-		    		    # "date": dt_str,
+		    		    "recipients" : f"{email}",
+		    		    "source_ip": f"{key}",
 		    		    # "issue_id" : issue_name,
 		    		    "status": "Open"
 		    		})
@@ -269,7 +285,6 @@ class FileProcess(Document):
 			    	    subject=f"Abuse Alerts: {company}: {key}",
 			    	    message=content
 			    	    )
-			    	frappe.msgprint("sent!")
 
 		    		new_issue = frappe.get_doc({
 		    		    "doctype": "Issue",
@@ -277,8 +292,8 @@ class FileProcess(Document):
 		    		    "description": content,
 		    		    "raised_by"  : current_user_email,
 		    		    "assigned_to": "samplebns088@gmail.com",
-		    		    # "recipients" : f"{email}",
-		    		    # "date": dt_str,
+		    		    "recipients" : f"{email}",
+		    		    "source_ip": f"{key}",
 		    		    # "issue_id" : issue_name,
 		    		    "status": "Open"
 		    		})
@@ -296,22 +311,22 @@ class FileProcess(Document):
 		    except Exception as e:
 		    	frappe.msgprint("Message not sent!")
 
-	doctype = "File Process"
+		# doctype = "File Process"
 
-	# Get the user name
-	user = frappe.session.user
+		# # Get the user name
+		# user = frappe.session.user
 
-	# Set filters to get only the documents owned by the user
-	filters = {
-	    "owner": user
-	}
+		# # Set filters to get only the documents owned by the user
+		# filters = {
+		#     "owner": user
+		# }
 
-	# Get the list of documents with the filters applied
-	documents = db.get_list(doctype, filters=filters)	  
+		# # Get the list of documents with the filters applied
+		# documents = db.get_list(doctype, filters=filters)	  
 
 
 # --------------------- ADD ISSUE ----------------
-# apps/erpnext/erpnext/support/doctype/issue/issue.py
+# apps/erpnext/erpnext/support/doctype/issue/issue.py number 146
 
 	# def get_issue_list(doctype, txt, filters, limit_start, limit_page_length=20, order_by='-modified'):
 	# 	from frappe.www.list import get_list
@@ -347,3 +362,36 @@ class FileProcess(Document):
 	# 	)
 
 # ------------------ END ISSUE -----------------------
+
+
+# # ------------------ ADD GET LIST PERMISION -----------------------
+# app/frappe/frappe/__init__.py number 1878
+
+# def get_list(doctype, *args, **kwargs):
+# 	"""List database query via `frappe.model.db_query`. Will also check for permissions.
+
+# 	:param doctype: DocType on which query is to be made.
+# 	:param fields: List of fields or `*`.
+# 	:param filters: List of filters (see example).
+# 	:param order_by: Order By e.g. `modified desc`.
+# 	:param limit_start: Start results at record #. Default 0.
+# 	:param limit_page_length: No of records in the page. Default 20.
+
+# 	Example usage:
+
+# 	        # simple dict filter
+# 	        frappe.get_list("ToDo", fields=["name", "description"], filters = {"owner":"test@example.com"})
+
+# 	        # filter as a list of lists
+# 	        frappe.get_list("ToDo", fields="*", filters = [["modified", ">", "2014-01-01"]])
+# 	"""
+# 	# ----------------------- THIS ONE -----------------
+# 	kwargs["ignore_permissions"] = True
+# 	# ----------------------- THIS ONE -----------------
+
+# 	import frappe.model.db_query
+
+# 	return frappe.model.db_query.DatabaseQuery(doctype).execute(*args, **kwargs)
+
+# # ------------------ ADD GET LIST PERMISION -----------------------
+# allow_guest=True
